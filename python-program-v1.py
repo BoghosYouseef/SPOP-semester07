@@ -15,22 +15,41 @@
 
 
 import threading
+import time
+import random
 
 
-def myFunc(x):
-    print(x)
+def myFunc(x, _id):
+    
+    while x < 10:
+
+        print(x, f"thread = {_id}")
+        
+        x+= random.choice([0.5, 1, 2])
+        time.sleep(random.choice([1, 1.5, 2]))
+
+t_start = time.perf_counter()
+
+first_var = 1
+
+second_var = 2
 
 
-first_var = "񬠜"
 
-second_var = "ᨊ"
+first_thread = threading.Thread(target=myFunc, args =[first_var, "first thread"])
+
+second_thread = threading.Thread(target=myFunc, args =[second_var,"second thread"])
+
+first_thread.start()
+second_thread.start()
+
+first_thread.join()
+second_thread.join()
+
+t_end = time.perf_counter()
+
+print(f"program is finished in {t_end - t_start} seconds")
 
 
-first_thread = threading.Thread(myFunc, [first_var])
-
-first_thread = threading.Thread(myFunc, [second_var])
-
-first_thread.run()
-second_thread.run()
 
 
